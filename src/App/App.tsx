@@ -3,10 +3,15 @@ import { StaticRouterProps } from "react-router"
 import { StaticRouter, Switch, Route } from "react-router-dom"
 import AppLayout from "./AppLayout"
 import NotFound from "./views/NotFound"
+import { Request } from "express"
 
-const App: React.FC<StaticRouterProps> = ({ location, context }) => {
+interface Props extends StaticRouterProps {
+    request: Request
+}
+
+const App: React.FC<Props> = ({ request, context }) => {
     return (
-        <StaticRouter location={location} context={context}>
+        <StaticRouter location={request.url} context={context}>
             <Switch>
                 <Route path="/404" render={props => <NotFound {...props} />} />
                 <Route path="/" render={props => <AppLayout {...props} />} />

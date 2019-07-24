@@ -11,7 +11,7 @@ app.get("*", (req, res, next) => {
     }
 
     const context: StaticRouterContext = {}
-    const __html = App(req.url, context)
+    const __html = App(context, req)
     if (context.url) {
         res.redirect(302, context.url)
         return

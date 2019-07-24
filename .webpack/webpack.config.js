@@ -73,9 +73,12 @@ module.exports = {
     plugins: [
         new Webpackbar({ name: "React SSR", color: "blue" }),
         {
+            // 這一個客製化的 plugin，功能是修改檔案後重啟動 web server，並接上 stdio
             apply: compiler => {
-                // 這一個客製化的 plugin，功能是完成後啟動 server，並接上 stdio
                 compiler.hooks.done.tap("CustomPlugin", compilation => {
+                    if (compilation.hasErrors()) {
+                        return
+                    }
                     // @ts-ignore
                     ps.lookup(
                         {
