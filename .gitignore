@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+test
+
+.DS_Store
+.directory
+.awcache
+*.log
+debug
+package-lock.json
+yarn.lock
+stat.json

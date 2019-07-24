@@ -1,0 +1,19 @@
+{
+  "extends": ["prettier"],
+  "parser": "babel-eslint",
+  "plugins": ["eslint-plugin-react", "react-hooks"],
+  "parserOptions": {},
+  "rules": {
+    "spaced-comment": "error",
+    "no-var": "error",
+    "no-extra-bind": "error",
+    "prefer-arrow-callback": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

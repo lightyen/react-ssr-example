@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run (Build Webpack)",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "yarn",
+      "args": ["run", "start"],
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "revealProblems": "onProblem"
+      }
+    }
+  ]
+}

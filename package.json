@@ -1,0 +1,30 @@
+{
+  "name": "react-ssr",
+  "version": "0.0.0",
+  "description": "react-ssr",
+  "author": "lightyen",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn && webpack --config .webpack/webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
+    "@babel/preset-react": "7.0.0",
+    "@babel/runtime": "7.4.5",
+    "@types/express": "^4.17.0",
+    "@types/webpack": "^4.32.0",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "eslint": "6.1.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "1.6.1",
+    "express": "^4.17.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "webpack": "^4.37.0",
+    "webpack-cli": "^3.3.6"
+  }
+}
