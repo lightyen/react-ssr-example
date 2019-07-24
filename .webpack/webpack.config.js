@@ -37,14 +37,10 @@ module.exports = {
     plugins: [
         {
             apply: compiler => {
-                // 這一個客製化的 plugin，功能是完成後啟動 server
+                // 這一個客製化的 plugin，功能是完成後啟動 server，並接上 stdio
                 compiler.hooks.done.tap("CustomPlugin", compilation => {
-                    const child = spawn("node", ["index.js"])
-                    child.stdout.on("data", chunk => {
-                        console.log(chunk.toString())
-                    })
-                    child.stderr.on("data", chunk => {
-                        console.error(chunk.toString())
+                    const child = spawn("node", ["index.js"], {
+                        stdio: [process.stdin, process.stdout, process.stderr],
                     })
                 })
             },
