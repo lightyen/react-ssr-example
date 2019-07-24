@@ -1,6 +1,8 @@
+// @ts-ignore
+const package = require("../package.json")
 // @ts-check
-
 const path = require("path")
+const fs = require("fs")
 const { spawn } = require("child_process")
 const ps = require("ps-node")
 const workingDirectory = process.cwd()
@@ -8,6 +10,7 @@ const workingDirectory = process.cwd()
 // Plugins
 const { TsConfigPathsPlugin } = require("awesome-typescript-loader")
 const Webpackbar = require("webpackbar")
+const { ExtendedAPIPlugin, EnvironmentPlugin } = require("webpack")
 
 /**
  * @type {import("webpack").Loader}
@@ -76,6 +79,10 @@ module.exports = {
     },
     plugins: [
         new Webpackbar({ name: "React SSR", color: "blue" }),
+        new ExtendedAPIPlugin(),
+        new EnvironmentPlugin({
+            VERSION: package.version,
+        }),
         {
             // 這一個客製化的 plugin，功能是修改檔案後重啟動 web server，並接上 stdio
             apply: compiler => {
@@ -101,6 +108,9 @@ module.exports = {
                             })
                         },
                     )
+                    const src = path.resolve(workingDirectory, "src/assets/favicon.ico")
+                    const des = path.resolve(workingDirectory, "build", "favicon.ico")
+                    fs.createReadStream(src).pipe(fs.createWriteStream(des))
                     const child = spawn("node", ["build"], {
                         stdio: [process.stdin, process.stdout, process.stderr],
                     })

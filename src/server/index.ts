@@ -1,12 +1,15 @@
 import express from "express"
+import path from "path"
 import App from "~/App"
 import { StaticRouterContext } from "react-router"
 
 const app = express()
 
+console.log(__dirname)
+
 app.get("*", (req, res, next) => {
     if (req.url.startsWith("/favicon")) {
-        res.sendStatus(404)
+        res.sendFile(path.resolve("build", "favicon.ico"))
         return
     }
 
@@ -25,6 +28,7 @@ app.get("*", (req, res, next) => {
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Test SSR">
+        <link rel="shortcut icon" href="/favicon.ico">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>

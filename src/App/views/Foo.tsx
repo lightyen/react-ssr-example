@@ -1,6 +1,6 @@
 import React from "react"
 
-function Foo() {
+const Foo: React.FC = ({}) => {
     return (
         <div className="card">
             <div className="card-body">

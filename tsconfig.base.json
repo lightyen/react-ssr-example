@@ -16,9 +16,9 @@
     "noUnusedLocals": false,
     "resolveJsonModule": true,
     "suppressImplicitAnyIndexErrors": true,
-    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
+    "allowJs": true,
     "incremental": true
   }
 }

@@ -2,7 +2,7 @@ import React from "react"
 import { Switch, Route, RouteComponentProps, Redirect } from "react-router-dom"
 
 import Hello from "~/App/views/Hello"
-import Foo from "~/App/views/Foo"
+import Foo from "./views/Foo"
 
 const AppLayout: React.FC<RouteComponentProps> = () => {
     return (
