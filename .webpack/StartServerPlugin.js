@@ -20,8 +20,9 @@ function CustomPlugin(option) {
 
 /** @param {import("webpack").Compiler} compiler */
 CustomPlugin.prototype.apply = compiler => {
-    compiler.hooks.done.tap("CustomPlugin", compilation => {
+    compiler.hooks.done.tapAsync("CustomPlugin", (compilation, callback) => {
         if (CustomPlugin["hash"] === compilation.hash || compilation.hasErrors()) {
+            callback()
             return
         }
         CustomPlugin["hash"] = compilation.hash
@@ -40,15 +41,16 @@ CustomPlugin.prototype.apply = compiler => {
                         process.kill(p.pid)
                     }
                 })
+                const child = spawn("node", ["build"], {
+                    stdio: [process.stdin, process.stdout, process.stderr],
+                })
+                callback()
             },
         )
         const workingDirectory = CustomPlugin["workingDirectory"]
         const src = path.resolve(workingDirectory, "src/assets/favicon.ico")
         const des = path.resolve(workingDirectory, "build", "favicon.ico")
         fs.createReadStream(src).pipe(fs.createWriteStream(des))
-        const child = spawn("node", ["build"], {
-            stdio: [process.stdin, process.stdout, process.stderr],
-        })
     })
 }
 
