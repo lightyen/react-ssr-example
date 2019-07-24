@@ -3,16 +3,20 @@ import { StaticRouter, Switch, Route } from "react-router-dom"
 
 function Hello() {
     return (
-        <div>
-            <button>這是一個 Server Side 渲染的按鈕</button>
+        <div className="card">
+            <div className="card-body">
+                <button className="btn btn-primary">這是一個 Server Side 渲染的按鈕</button>
+            </div>
         </div>
     )
 }
 
 function Foo() {
     return (
-        <div>
-            <button>Foo</button>
+        <div className="card">
+            <div className="card-body">
+                <button className="btn btn-primary">Foo</button>
+            </div>
         </div>
     )
 }

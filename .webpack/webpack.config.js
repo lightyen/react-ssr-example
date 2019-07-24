@@ -2,6 +2,7 @@
 
 const path = require("path")
 const { spawn } = require("child_process")
+const ps = require("ps-node")
 const workingDirectory = process.cwd()
 
 // Plugins
@@ -30,7 +31,13 @@ const tsxLoader = {
  */
 module.exports = {
     target: "node",
-    mode: "production",
+    mode: "development",
+    performance: false,
+    watch: true,
+    watchOptions: {
+        ignored: /node_modules/,
+    },
+    devtool: "source-map",
     stats: {
         children: false,
         modules: false,
@@ -69,7 +76,24 @@ module.exports = {
             apply: compiler => {
                 // 這一個客製化的 plugin，功能是完成後啟動 server，並接上 stdio
                 compiler.hooks.done.tap("CustomPlugin", compilation => {
-                    const child = spawn("node", ["build", "index.js"], {
+                    // @ts-ignore
+                    ps.lookup(
+                        {
+                            command: "node",
+                            arguments: "build",
+                        },
+                        (err, resultList) => {
+                            if (err) {
+                                throw new Error(err)
+                            }
+                            resultList.forEach(p => {
+                                if (p) {
+                                    process.kill(p.pid)
+                                }
+                            })
+                        },
+                    )
+                    const child = spawn("node", ["build"], {
                         stdio: [process.stdin, process.stdout, process.stderr],
                     })
                 })

@@ -26,15 +26,17 @@
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "1.6.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
     "typescript": "3.5.3",
     "webpack": "4.37.0",
     "webpack-cli": "3.3.6",
+    "webpack-merge": "^4.2.1",
     "webpackbar": "3.2.0"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1"
+    "ps-node": "^0.1.6"
   }
 }
