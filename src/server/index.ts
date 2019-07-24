@@ -1,7 +1,7 @@
-// @ts-check
-const express = require("express")
+import express from "express"
+import SSR from "../App"
+
 const app = express()
-const SSR = require("./build")
 
 app.get("*", (req, res, next) => {
     const __html = SSR(req.url)

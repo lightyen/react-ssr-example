@@ -1,13 +1,26 @@
 {
-  "extends": ["prettier"],
-  "parser": "babel-eslint",
-  "plugins": ["eslint-plugin-react", "react-hooks"],
-  "parserOptions": {},
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "spaced-comment": "error",
     "no-var": "error",
     "no-extra-bind": "error",
     "prefer-arrow-callback": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
   },

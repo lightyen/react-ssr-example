@@ -17,7 +17,11 @@ function Foo() {
     )
 }
 
-function App({ url }) {
+interface Props {
+    url: string
+}
+
+const App: React.FC<Props> = ({ url }) => {
     return (
         <StaticRouter location={url}>
             <Switch>
