@@ -1,36 +1,15 @@
 import React from "react"
+import { StaticRouterProps } from "react-router"
 import { StaticRouter, Switch, Route } from "react-router-dom"
+import AppLayout from "./AppLayout"
+import NotFound from "./views/NotFound"
 
-function Hello() {
+const App: React.FC<StaticRouterProps> = ({ location, context }) => {
     return (
-        <div className="card">
-            <div className="card-body">
-                <button className="btn btn-primary">這是一個 Server Side 渲染的按鈕</button>
-            </div>
-        </div>
-    )
-}
-
-function Foo() {
-    return (
-        <div className="card">
-            <div className="card-body">
-                <button className="btn btn-primary">Foo</button>
-            </div>
-        </div>
-    )
-}
-
-interface Props {
-    url: string
-}
-
-const App: React.FC<Props> = ({ url }) => {
-    return (
-        <StaticRouter location={url}>
+        <StaticRouter location={location} context={context}>
             <Switch>
-                <Route path="/" exact component={Hello} />
-                <Route path="/foo" exact component={Foo} />
+                <Route path="/404" render={props => <NotFound {...props} />} />
+                <Route path="/" render={props => <AppLayout {...props} />} />
             </Switch>
         </StaticRouter>
     )

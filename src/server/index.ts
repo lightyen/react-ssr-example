@@ -1,10 +1,22 @@
 import express from "express"
 import App from "~/App"
+import { StaticRouterContext } from "react-router"
 
 const app = express()
 
 app.get("*", (req, res, next) => {
-    const __html = App(req.url)
+    if (req.url.startsWith("/favicon")) {
+        res.sendStatus(404)
+        return
+    }
+
+    const context: StaticRouterContext = {}
+    const __html = App(req.url, context)
+    if (context.url) {
+        res.redirect(302, context.url)
+        return
+    }
+
     res.send(`<!DOCTYPE html>
 <html lang="en">
     <head>
