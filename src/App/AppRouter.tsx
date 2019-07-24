@@ -1,9 +1,10 @@
 import React from "react"
 import { StaticRouterProps } from "react-router"
 import { StaticRouter, Switch, Route } from "react-router-dom"
+import { Request } from "express"
+
 import AppLayout from "./AppLayout"
 import NotFound from "./views/NotFound"
-import { Request } from "express"
 
 interface Props extends StaticRouterProps {
     request: Request

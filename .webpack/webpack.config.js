@@ -39,9 +39,13 @@ module.exports = {
     },
     devtool: "source-map",
     stats: {
-        children: false,
-        modules: false,
-        entrypoints: false,
+        all: false,
+        colors: true,
+        builtAt: true,
+        errors: true,
+        cached: true,
+        cachedAssets: true,
+        warnings: true,
     },
     entry: {
         index: path.resolve(workingDirectory, "src", "server", "index.ts"),
@@ -75,10 +79,11 @@ module.exports = {
         {
             // 這一個客製化的 plugin，功能是修改檔案後重啟動 web server，並接上 stdio
             apply: compiler => {
-                compiler.hooks.done.tap("CustomPlugin", compilation => {
-                    if (compilation.hasErrors()) {
+                compiler.hooks.done.tap("CustomPlugin", function callback(compilation) {
+                    if (callback["hash"] === compilation.hash || compilation.hasErrors()) {
                         return
                     }
+                    callback["hash"] = compilation.hash
                     // @ts-ignore
                     ps.lookup(
                         {
