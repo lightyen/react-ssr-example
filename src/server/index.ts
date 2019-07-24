@@ -5,11 +5,16 @@ import { StaticRouterContext } from "react-router"
 
 const app = express()
 
-console.log(__dirname)
+const hash = __webpack_hash__.slice(0, 8)
 
 app.get("*", (req, res, next) => {
     if (req.url.startsWith("/favicon")) {
         res.sendFile(path.resolve("build", "favicon.ico"))
+        return
+    }
+
+    if (req.url.startsWith(`/index.${hash}.css`)) {
+        res.sendFile(path.resolve("build", "static/css", `index.${hash}.css`))
         return
     }
 
@@ -29,7 +34,7 @@ app.get("*", (req, res, next) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Test SSR">
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/index.${hash}.css">
     </head>
     <body>
         ${__html}

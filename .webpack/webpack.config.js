@@ -2,15 +2,15 @@
 const package = require("../package.json")
 // @ts-check
 const path = require("path")
-const fs = require("fs")
-const { spawn } = require("child_process")
-const ps = require("ps-node")
 const workingDirectory = process.cwd()
 
 // Plugins
 const { TsConfigPathsPlugin } = require("awesome-typescript-loader")
 const Webpackbar = require("webpackbar")
 const { ExtendedAPIPlugin, EnvironmentPlugin } = require("webpack")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const StartServerPlugin = require("./StartServerPlugin")
 
 /**
  * @type {import("webpack").Loader}
@@ -75,6 +75,10 @@ module.exports = {
                 exclude: /node_modules|\.test.tsx?$/,
                 use: tsxLoader,
             },
+            {
+                test: /\.s(a|c)ss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+            },
         ],
     },
     plugins: [
@@ -83,39 +87,13 @@ module.exports = {
         new EnvironmentPlugin({
             VERSION: package.version,
         }),
-        {
-            // 這一個客製化的 plugin，功能是修改檔案後重啟動 web server，並接上 stdio
-            apply: compiler => {
-                compiler.hooks.done.tap("CustomPlugin", function callback(compilation) {
-                    if (callback["hash"] === compilation.hash || compilation.hasErrors()) {
-                        return
-                    }
-                    callback["hash"] = compilation.hash
-                    // @ts-ignore
-                    ps.lookup(
-                        {
-                            command: "node",
-                            arguments: "build",
-                        },
-                        (err, resultList) => {
-                            if (err) {
-                                throw new Error(err)
-                            }
-                            resultList.forEach(p => {
-                                if (p) {
-                                    process.kill(p.pid)
-                                }
-                            })
-                        },
-                    )
-                    const src = path.resolve(workingDirectory, "src/assets/favicon.ico")
-                    const des = path.resolve(workingDirectory, "build", "favicon.ico")
-                    fs.createReadStream(src).pipe(fs.createWriteStream(des))
-                    const child = spawn("node", ["build"], {
-                        stdio: [process.stdin, process.stdout, process.stderr],
-                    })
-                })
-            },
-        },
+        new MiniCssExtractPlugin({
+            filename: "static/css/[name].[hash:8].css",
+            chunkFilename: "static/css/[name].[hash:8].chunk.css",
+        }),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ["**/*"],
+        }),
+        new StartServerPlugin(),
     ],
 }
