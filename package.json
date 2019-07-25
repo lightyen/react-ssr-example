@@ -5,7 +5,7 @@
   "author": "lightyen",
   "license": "MIT",
   "scripts": {
-    "start": "yarn && webpack --config .webpack/webpack.config.js",
+    "start": "yarn && webpack --config .webpack/webpack.config",
     "doit": "yarn && yarn upgrade-interactive --latest"
   },
   "devDependencies": {
@@ -24,13 +24,16 @@
     "autoprefixer": "^9.6.1",
     "awesome-typescript-loader": "5.2.1",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.1.0",
     "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "1.6.1",
+    "jquery": "^3.4.1",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
     "postcss-loader": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -41,7 +44,7 @@
     "webpack": "4.37.0",
     "webpack-cli": "3.3.6",
     "webpack-merge": "^4.2.1",
-    "webpackbar": "3.2.0"
+    "webpackbar": "^3.2.0"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",

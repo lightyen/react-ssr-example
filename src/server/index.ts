@@ -3,21 +3,17 @@ import path from "path"
 import App from "~/App"
 import { StaticRouterContext } from "react-router"
 
+const defaultPort = 3000
+
 const app = express()
+
+const cwd = process.cwd()
 
 const hash = __webpack_hash__.slice(0, 8)
 
+app.use("/", express.static(path.resolve(cwd, "build")))
+
 app.get("*", (req, res, next) => {
-    if (req.url.startsWith("/favicon")) {
-        res.sendFile(path.resolve("build", "favicon.ico"))
-        return
-    }
-
-    if (req.url.startsWith(`/index.${hash}.css`)) {
-        res.sendFile(path.resolve("build", "static/css", `index.${hash}.css`))
-        return
-    }
-
     const context: StaticRouterContext = {}
     const __html = App(context, req)
     if (context.url) {
@@ -34,17 +30,16 @@ app.get("*", (req, res, next) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Test SSR">
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="/index.${hash}.css">
+        <link rel="stylesheet" href="/static/css/index.${hash}.css">
     </head>
     <body>
         ${__html}
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="/static/js/jquery.slim.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>`)
 })
 
-app.listen(3000, () => {
-    console.log("Running on http://localhost:3000/")
+app.listen(defaultPort, () => {
+    console.log("\x1b[1;35m%s\x1b[0m", `Running on http://localhost:${defaultPort}/`)
 })
