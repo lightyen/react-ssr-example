@@ -103,7 +103,14 @@ module.exports = {
             chunkFilename: "static/css/[name].[hash:8].chunk.css",
         }),
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ["**/*"],
+            cleanOnceBeforeBuildPatterns: [
+                "**/*",
+                "!static",
+                "!static/assets",
+                "!static/assets/**/*",
+                "!static/client",
+                "!static/client/**/*",
+            ],
         }),
         new CopyWebpackPlugin([{ from: "assets", to: "static/assets" }]),
         new WebpackbarPlugin({ color: "#d670d6", name: "React SSR" }),
