@@ -13,6 +13,7 @@ const WebpackbarPlugin = require("webpackbar")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 const StartServerPlugin = require("./StartServerPlugin")
+const nodeExternals = require("webpack-node-externals")
 
 /**
  * @type {import("webpack").Loader}
@@ -38,7 +39,7 @@ module.exports = {
     target: "node",
     mode: "development",
     performance: false,
-    devtool: "source-map",
+    devtool: "inline-source-map",
     watch: true,
     watchOptions: { ignored: /node_modules/ },
     stats: {
@@ -59,7 +60,7 @@ module.exports = {
         libraryExport: "default",
         libraryTarget: "commonjs2",
     },
-    externals: ["express"],
+    externals: [nodeExternals()], // 排除已安裝的第三方套件，例如 express
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
         plugins: [
@@ -77,7 +78,18 @@ module.exports = {
             },
             {
                 test: /\.s(a|c)ss$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: [require("cssnano")],
+                            minimize: true,
+                        },
+                    },
+                    "sass-loader",
+                ],
             },
         ],
     },
@@ -93,20 +105,8 @@ module.exports = {
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: ["**/*"],
         }),
-        {
-            apply: compiler =>
-                compiler.hooks.afterEmit.tap("custom-plugin", (compilation, callback) => {
-                    const src = path.resolve(workingDirectory, "src/assets/favicon.ico")
-                    const des = path.resolve(workingDirectory, "build", "favicon.ico")
-                    fs.createReadStream(src).pipe(fs.createWriteStream(des))
-                }),
-        },
+        new CopyWebpackPlugin([{ from: "assets", to: "static/assets" }]),
         new WebpackbarPlugin({ color: "#d670d6", name: "React SSR" }),
-        new CopyWebpackPlugin([
-            { from: "node_modules/jquery/dist/jquery.slim.min.js", to: "static/js" },
-            { from: "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", to: "static/js" },
-            { from: "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map", to: "static/js" },
-        ]),
         new StartServerPlugin({ dist: "build" }),
     ],
 }

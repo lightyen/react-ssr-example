@@ -1,10 +1,13 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 const Foo: React.FC = ({}) => {
     return (
         <div className="card">
             <div className="card-body">
-                <button className="btn btn-primary">Foo</button>
+                <Link className="btn btn-primary" to="/">
+                    Foo
+                </Link>
             </div>
         </div>
     )
