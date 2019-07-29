@@ -18,6 +18,11 @@ const App: React.FC<StaticRouterProps> = props => {
             <meta name="description" content="Test SSR" />
             <link rel="shortcut icon" href="/assets/favicon.ico" />
             <style>${styles}</style>
+            <style>{`
+                body {
+                    background: #fae6e6;
+                }
+            `}</style>
             <body>
                 <StaticRouter {...props}>
                     <AppRouter />
