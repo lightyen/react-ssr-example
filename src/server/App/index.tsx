@@ -6,5 +6,5 @@ import { Request } from "express"
 
 import "./scss/styles.scss"
 
-export default (context: StaticRouterContext, request: Request) =>
-    ReactDOMServer.renderToString(<AppRouter context={context} request={request} />)
+export default (context?: StaticRouterContext, request?: Request) =>
+    ReactDOMServer.renderToString(<AppRouter context={context || {}} request={request || null} />)

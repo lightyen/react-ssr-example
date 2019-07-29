@@ -1,4 +1,3 @@
 import React from "react"
 import ReactDOM from "react-dom"
-console.log("render")
-ReactDOM.render(<div>Hello world</div>, document.getElementById("app"))
+ReactDOM.render(<div>這是 Client Side 渲染的內容</div>, document.getElementById("app"))

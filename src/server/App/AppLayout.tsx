@@ -5,15 +5,12 @@ import { routes } from "./navigation"
 
 const AppLayout: React.FC<RouteComponentProps> = () => {
     return (
-        <>
-            <Switch>
-                {routes.map(({ ...rest }, i) => (
-                    <Route key={i} {...rest} />
-                ))}
-                <Redirect to="/404" />
-            </Switch>
-            <div id="app" />
-        </>
+        <Switch>
+            {routes.map(({ ...rest }, i) => (
+                <Route key={i} {...rest} />
+            ))}
+            <Redirect to="/404" />
+        </Switch>
     )
 }
 

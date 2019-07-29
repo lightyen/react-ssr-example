@@ -41,8 +41,12 @@ const middleware = (req: Request, res: Response) => {
     </head>
     <body>
         ${__html}
-        <script type="text/javascript" src="/client/js/index.bundle.js"></script>
-        <script type="text/javascript" src="/client/js/vendor.bundle.chunk.js"></script>
+        ${
+            req.url.startsWith("/404")
+                ? ""
+                : `<script type="text/javascript" src="/client/js/index.bundle.js"></script>
+<script type="text/javascript" src="/client/js/vendor.bundle.chunk.js"></script>`
+        }
     </body>
 </html>`)
 }
