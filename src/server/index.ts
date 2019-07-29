@@ -2,13 +2,11 @@ import express, { Request, Response } from "express"
 import path from "path"
 import App from "~/App"
 
+global.staticPath = path.resolve(process.cwd(), "build", "static")
 const defaultPort = 3000
-
 const app = express()
 
-const cwd = process.cwd()
-
-app.use("/", express.static(path.resolve(cwd, "build", "static")))
+app.use("/", express.static(global.staticPath))
 
 const reactMiddleware = (req: Request, res: Response) => {
     const { __html, context } = App(req.url)

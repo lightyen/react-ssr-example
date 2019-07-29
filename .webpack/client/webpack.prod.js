@@ -20,7 +20,7 @@ const vendorPath = "" // path.resolve(process.cwd(), "build", "vendor")
  */
 const plugins = [
     new ContextReplacementPlugin(/moment[/\\]locale$/, /^es$|zh/),
-    new CompressionWebpackPlugin({ algorithm: "gzip", threshold: 10240 }),
+    // new CompressionWebpackPlugin({ algorithm: "gzip", threshold: 10240 }),
     new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: vendorPath
             ? ["**/*", "!vendor", "!vendor/vendor.js", "!vendor/manifest.json"]

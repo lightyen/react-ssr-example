@@ -3,6 +3,9 @@ declare namespace NodeJS {
         NODE_ENV: "development" | "production"
         VERSION: string
     }
+    interface Global {
+        staticPath: string
+    }
 }
 
 declare const __webpack_hash__: string

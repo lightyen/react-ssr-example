@@ -15,6 +15,18 @@
         "clear": true,
         "revealProblems": "onProblem"
       }
+    },
+    {
+      "label": "Run (Build Client)",
+      "type": "shell",
+      "group": "build",
+      "command": "yarn",
+      "args": ["run", "client"],
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "revealProblems": "onProblem"
+      }
     }
   ]
 }

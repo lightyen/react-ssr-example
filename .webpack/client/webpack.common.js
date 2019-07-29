@@ -142,7 +142,7 @@ module.exports = function(options) {
         entry,
         output: {
             path: dist,
-            filename: isDevelopment ? "js/[name].bundle.js" : "js/[name].bundle.js",
+            filename: isDevelopment ? "js/bundle.js" : "js/bundle.[hash].js",
             chunkFilename: isDevelopment ? "js/[name].chunk.js" : "js/[name].bundle.chunk.js",
             publicPath: process.env.PUBLIC_URL + "/",
         },
